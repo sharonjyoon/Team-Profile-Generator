@@ -1,21 +1,14 @@
-const Manager = require("./lib/Manager");
-const Engineer = require("./lib/Engineer");
-const Intern = require("./lib/Intern");
+const Manager = require("./Develop/lib/Manager");
+const Engineer = require("./Develop/lib/Engineer");
+const Intern = require("./Develop/lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
-const fse = require("fs-extra");
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
-const outputPath = path.join(OUTPUT_DIR, "team.html");
+const outputPath = path.join(OUTPUT_DIR, "index.html");
 
-const render = require("./lib/htmlRenderer");
-
-//import constructor functions
-const Employee = require('./lib/Employee');
-const Engineer = require('./lib/Engineer');
-const Intern = require('./lib/Intern');
-const Manager = require('./lib/Manager');
+const render = require("./Develop/lib/htmlRenderer.js");
 const { runInThisContext } = require("vm");
 const { userInfo } = require("os");
 
@@ -104,7 +97,7 @@ inquirer.prompt([
         name: 'office',
         message: 'Enter office number: ',
         validate: officeInput => {
-          if(officeInput) => {
+          if(officeInput) {
             return true;
           }else {
             return 'Please enter office number.';
@@ -118,7 +111,7 @@ inquirer.prompt([
     teamMembers.push(ManagerTeam);
     addOption()
   })
-  }else if(answers.role ==== 'Engineer'){
+  }else if(answers.role === 'Engineer'){
     inquirer.prompt([
      {
       type: 'input',
@@ -167,33 +160,33 @@ inquirer.prompt([
   }
 
   //add employee if needed
-const finished = () => {
-  let teamHtml = render(teamMates)
-  fse.outputFile('output/team.html', teamHtml)
-    .then(() => {
-      console.log()
-    })
-    .catch(err => {
-      console.error(err)
-    });
-}
 
 function addOption(){
   inquirer.prompt([
     {
-      type: 'list',
-      choices: ['yes', 'no'],
-      name: 'yesOrNo',
+      type: 'confirm',
+      name: 'addMore',
       message: 'Would you like to add another team member?',
     }
   ])
   .then(res => {
-    if(yesOrNo.yesOrNo === 'yes'){
+    if(res.addMore === true){
       userInfo(teamMates)
     }else {
-      finished()
+      console.log('team', teamMates)
+      let cardLayoutHtml = generateTemplate (teamMates);
+      generateHtml(cardLayoutHtml)
     }
   })
 }
-
 })
+
+userInfo();
+
+function buildTeam() {
+  if (!fs.existsSync(OUTPUT_DIR)) {
+    fs.mkdirSync(OUTPUT_DIR);
+  }
+  fs.writeFileSync(outputPath, render(teamMates), 'utf-8');
+}
+//createManager();
