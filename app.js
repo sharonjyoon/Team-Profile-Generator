@@ -45,8 +45,8 @@ function outer() {
       {
         type: 'input',
         name: 'nameOfManager',
-        message: `Please enter manager's name.`
-        validate: (answer) => {
+        message: `Please enter manager's name.`,
+        validate: function (answer) {
           if (answer !== '') {
             return true;
           }
@@ -57,7 +57,7 @@ function outer() {
         type: 'input',
         name: 'managerIdNumber',
         message: `Please enter the manager's id number.`,
-        validate: (answer) => {
+        validate: function (answer) {
           if (answer !== '') {
             return true;
           }
@@ -68,7 +68,7 @@ function outer() {
           type: 'input',
           name: 'managerEmail',
           message: `Please enter the manager's email address.`,
-          validate: (answer) => {
+          validate: function (answer) {
             if(answer !== '') {
               return true;
             }
@@ -79,11 +79,11 @@ function outer() {
           type: 'input',
           name: 'officeNumber',
           message: `What is the manager's office number?`,
-          validate: (answer) => {
+          validate: function (answer) {
             if(answer !== '') {
               return true;
             }
-              return 'Please enter office number.';
+              return 'Please enter office number.'
           },
         },
     ])
@@ -94,7 +94,7 @@ function outer() {
         answers.managerEmail,
         answers.officeNumber
       );
-      teamMates.push(manager);
+      teamMates.push(teamManager);
       idArr.push(answers.managerIdNumber);
       makeTeam();
     });
@@ -133,7 +133,7 @@ function outer() {
         type: 'input',
         name: 'nameOfEngineer',
         message: `Please enter the engineer's name.`,
-        validate: (answer) => {
+        validate: function (answer) {
           if(answer !== '') {
             return true;
           }
@@ -143,8 +143,8 @@ function outer() {
       {
         type: 'input',
         name: 'engineerIdNumber',
-        message: `Please enter the engineer's id number.`;
-        validate: (answer) => {
+        message: `Please enter the engineer's id number.`,
+        validate: function (answer) {
           if(answer !== '') {
             return true;
           }
@@ -155,7 +155,7 @@ function outer() {
         type: 'input',
         name: 'engineerEmail',
         message: `Please enter the engineer's email address.`,
-        validate: (answer) => {
+        validate: function (answer) {
           if(answer !== '') {
             return true;
           }
@@ -166,7 +166,7 @@ function outer() {
         type: 'input',
         name: 'github',
         message: `Please enter the engineer's GitHub Username.`,
-        validate: (answer) => {
+        validate: function (answer) {
           if(answer !== '') {
             return true;
           }
@@ -193,7 +193,7 @@ function outer() {
         type: 'input', 
         name: 'nameOfIntern',
         message: `Please enter the intern's name.`,
-        validate: (answer) => {
+        validate: function (answer) {
           if(answer !== '') {
             return true;
           }
@@ -204,7 +204,7 @@ function outer() {
         type: 'input',
         name: 'internIdNumber',
         message: `Please enter the intern's id number.`,
-        validate: (answer) => {
+        validate: function (answer) {
           if(answer !== '') {
             return true;
           }
@@ -215,7 +215,7 @@ function outer() {
         type: 'input',
         name: 'internEmail',
         message: `Please enter the intern's email address.`,
-        validate: (answer) => {
+        validate: function (answer) {
           if(answer !== '') {
             return true;
           }
@@ -226,7 +226,7 @@ function outer() {
         type: 'input',
         name: 'school',
         message: `Please enter intern's school name.`,
-        validate: (answer) => {
+        validate: function (answer) {
           if(answer !== '') {
             return true;
           }
@@ -236,22 +236,22 @@ function outer() {
     ])
     .then((answers) => {
       const intern = new Intern(
-        answers.internName,
+        answers.nameOfIntern,
         answers.internIdNumber,
         answers.internEmail,
         answers.school
       );
       teamMates.push(intern);
-      idArr.push(answers.internIdNumber);\
+      idArr.push(answers.internIdNumber);
       makeTeam();
     });
   }
 
   function setupTeam() {
-    if(!fs.existsSync(DIST_DIR)) {
-      fs.mkdirSync(DIST_DIR);
+    if(!fs.existsSync(OUTPUT_DIR)) {
+      fs.mkdirSync(OUTPUT_DIR);
     }
-    fs.writeFileSync(distPath, render(teamMates), 'utf-8');
+    fs.writeFileSync(outputPath, render(teamMates), 'utf-8');
   }
 
 manager();
